@@ -1,6 +1,28 @@
 {
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.0",
     "nodemon": "^3.1.10"
-  }
+  },
+  "name": "projectinternetshopback",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuralibrawlstars/ProjectInternetShop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nuralibrawlstars/ProjectInternetShop/issues"
+  },
+  "homepage": "https://github.com/nuralibrawlstars/ProjectInternetShop#readme",
+  "description": ""
 }
