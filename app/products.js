@@ -94,6 +94,7 @@ async function updateProduct(req, res) {
 router.get('/', listProducts);
 router.get('/:id', getProductById);
 // router.post('/', [auth, permit('admin')], upload.single('image'), createProduct);
+router.post('/', upload.single('image'), createProduct);
 router.delete('/:id', deleteProduct);
 router.put('/:id', upload.single('image'), updateProduct);
 

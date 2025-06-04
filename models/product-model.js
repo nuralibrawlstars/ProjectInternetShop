@@ -10,12 +10,22 @@ const ProductSchema = new Schema({
     type: Number,
     required: true,
   },
+
   description: String,
   image: String,
+
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
     required: true,
+  },
+  isFavorite: {
+    type: Boolean,
+    default: false,
+  },
+  rating: {
+    type: Number,
+    default: 0,
   },
 });
 
