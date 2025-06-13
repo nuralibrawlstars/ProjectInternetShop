@@ -1,4 +1,4 @@
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 8000;
@@ -10,7 +10,6 @@ const favorites = require('./app/favorites');
 const cart = require('./app/cart');
 const cors = require('cors');
 const mongoose = require('mongoose');
-// const { swaggerUi, swaggerDocument } = require('./swagger');
 
 async function start() {
   await mongoose.connect('mongodb://localhost:27017/shop');
@@ -19,7 +18,6 @@ async function start() {
   app.use(express.json());
   app.use('/products', productsRouter);
   app.use('/categories', categories);
-  // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use('/users', users);
   app.use('/admin', admin);
   app.use('/favorites', favorites);
@@ -30,8 +28,8 @@ async function start() {
   });
 
   const gracefullShutdown = async () => {
-    console.log('Shutdown gracefully...');
-    await mongoose.disconnect;
+    console.log('Shutting down gracefully...');
+    await mongoose.disconnect();
     process.exit(0);
   };
   process.on('SIGINT', gracefullShutdown);

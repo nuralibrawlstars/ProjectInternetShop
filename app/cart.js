@@ -3,10 +3,11 @@ const router = express.Router();
 const auth = require('./middleware/auth');
 const User = require('../models/user-model');
 
-router.post('/:productId', auth, async (requestAnimationFrame, res) => {
+router.post('/:productId', auth, async (req, res) => {
   const userId = req.user.id;
   const { productId } = req.params;
   const { quantaty = 1 } = req.body;
+
   try {
     const user = await User.findById(userId);
     if (!user) {
@@ -14,7 +15,7 @@ router.post('/:productId', auth, async (requestAnimationFrame, res) => {
     }
     const existing = user.cart.find(item => item.product.toString() === productId);
     if (existing) {
-      existing.quanity += quantaty;
+      existing.quantity += quantaty;
     } else {
       user.cart.push({ product: productId, quantaty });
     }
@@ -43,3 +44,5 @@ router.delete('/:productId', auth, async (req, res) => {
     res.status(200).json({ message: 'Product removed from cart', cart: user.cart });
   } catch (error) {}
 });
+
+module.exports = router;
