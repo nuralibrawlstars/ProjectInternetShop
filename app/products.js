@@ -6,6 +6,7 @@ const path = require('path');
 const config = require('../config.js');
 const Product = require('../models/product-model.js');
 const Category = require('../models/category-model.js');
+const User = require('../models/user-model.js');
 const auth = require('./middleware/auth.js');
 const permit = require('./middleware/permit.js');
 
@@ -23,7 +24,19 @@ const upload = multer({ storage });
 async function listProducts(req, res) {
   try {
     const { category } = req.query;
+    const userId = req.user.id;
+
+    let userFavorites = [];
+
+    if (userId) {
+      const user = await User.findById(userId);
+      if (user) {
+        const userFavorites = user.favorites.map(id => id.toString());
+      }
+    }
+
     let filter = {};
+
     if (category) {
       const foundCategory = await Category.findOne({ title: category });
       if (!foundCategory) return res.status(404).send('Category not found');
@@ -31,8 +44,14 @@ async function listProducts(req, res) {
     }
 
     const results = await Product.find(filter);
-    res.send(results);
+    const productsWithFavorites = results.map(product => ({
+      ...product.toObject(),
+      isFavorite: userFavorites.includes(product._id.toString()),
+    }));
+
+    res.send(productsWithFavorites);
   } catch (error) {
+    console.error(error);
     res.sendStatus(500);
   }
 }
@@ -100,7 +119,7 @@ async function updateProduct(req, res) {
   }
 }
 
-router.get('/', listProducts);
+router.get('/', auth, listProducts);
 router.get('/:id', getProductById);
 // router.post('/', [auth, permit('admin')], upload.single('image'), createProduct);
 router.post('/', upload.single('image'), createProduct);

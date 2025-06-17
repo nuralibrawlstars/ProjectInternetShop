@@ -28,5 +28,8 @@
     "url": "https://github.com/nuralibrawlstars/ProjectInternetShop/issues"
   },
   "homepage": "https://github.com/nuralibrawlstars/ProjectInternetShop#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/nanoid": "^2.1.0"
+  }
 }
