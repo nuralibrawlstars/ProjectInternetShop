@@ -17,7 +17,7 @@ router.post('/:productId', async (req, res) => {
 
 router.delete('/:productId', async (req, res) => {
   try {
-    const userId = req.userId;
+    const { userId } = req.body;
     const { productId } = req.params;
 
     const user = await User.findByIdAndUpdate(userId, {
