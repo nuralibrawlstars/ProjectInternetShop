@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product',
       },
-      quanity: {
+      quantity: {
         type: Number,
         default: 1,
       },

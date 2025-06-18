@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('./middleware/auth');
 const User = require('../models/user-model');
+const Product = require('../models/product-model');
 
 router.post('/:productId', auth, async (req, res) => {
   const userId = req.user.id;
@@ -17,7 +18,8 @@ router.post('/:productId', auth, async (req, res) => {
     if (existing) {
       existing.quantity += quantaty;
     } else {
-      user.cart.push({ product: productId, quantaty });
+      const product = await Product.findById(productId);
+      user.cart.push({ product, quantaty });
     }
     await user.save();
     res.status(200).json({ message: 'Product added to cart', cart: user.cart });
